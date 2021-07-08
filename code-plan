@@ -1,0 +1,106 @@
+Objective
+    Create a capsule hotel simulator
+
+Requirements
+    -Main Menu with options to enter other sub menus
+        1 check-in
+        2 check-out
+        3 view guests
+        4 exit
+    -Check in menu
+        * takes as input guest name, and capsule number
+        * checks for occupied capsules
+        * (Stretch) helper menu that displays vaccancies
+    -Check out menu
+        * takes capsule number
+        * validates the capsule is occupied and responds accordingly
+        * (Stretch) add capability to check out by guest name
+    -View guests
+        * Display Guests and the capsule they occupy
+        * Given a number the view guests menu displays 11 capsules (the given number +/- 5)
+        * (stretch) Different views that show all capsules
+        * (stretch) have a "verbose" and "concise" views.
+            -Concise shows only the occupied capsules with numbers
+            -Verbose shows all capsules with "(vaccant)" where applicable
+    -exit
+        *Should have a "are you sure" confirmation dialogue
+
+Technical Requirements
+    -Program uses String[] for the capsules where contents are the persons's name
+    -Unoccupied capsules use 'null'
+    -Use multiple methods beyond "main"
+
+//Pseudo code
+
+Instantiate Scanner
+
+main
+    Opening Message
+    Primary Loop
+        Main Menu
+    Exit Message
+End main
+
+mainMenu
+    Instantiate capsule hotel size via args
+    Options dialogue
+    Loop while option != exit
+        Scanner option
+        Switch(int)
+            checkIn
+            checkOut
+            viewGuests
+            exit
+            invalidInput
+End mainMenu
+
+checkIn
+    Options dialogue
+    Scanner name
+    loop
+        Scanner capsuleNumber (Break if input == 'EXIT')
+        Validate capsule vaccant
+    re-loop if capsule occupied
+    assign name to capsule
+    confirmation message
+end checkIn
+
+checkOut
+    Options dialogue
+    loop
+        Scanner capsuleNumber (Break if input == 'EXIT')
+        validate capsule occupied
+    re-loop if capsule vaccant
+    set capsule to null
+    confirmation message
+end checkOut
+
+viewGuests
+    Dialogue asking for capsule number
+    Scanner capsuleNumber
+    startIndex = capsuleNumber > 5 ? capsuleNumber - 5 : 0
+    endIndex = capsuleNumber + 5 > capsuleHotel.length : capsuleHotel.length : capsuleNumber + 5
+    loop startIndex to endIndex
+        println capsule info
+    end loop
+end viewGuests
+
+exit
+    displays exit message
+end exit
+    
+    
+
+        
+
+
+
+
+    
+    
+
+
+
+
+
+
