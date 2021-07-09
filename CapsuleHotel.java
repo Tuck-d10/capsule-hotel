@@ -82,13 +82,12 @@ public class CapsuleHotel {
         //Get capsule #
         printMenuHeader("Check Out");
         System.out.println("Enter the capsule #(1-"+capsuleHotel.length+")");        
-        userPrompt();
-
+        
         do{
             capsuleNumber = Integer.valueOf(sc.nextLine());
-        }while(capsuleNumber < 0 || capsuleNumber > capsuleHotel.length || isVaccant(capsuleNumber));
+        }while(capsuleNumber < 0 || capsuleNumber > capsuleHotel.length || isVaccant(capsuleNumber - 1));
 
-        System.out.printf("%s has left the building.", capsuleHotel[capsuleNumber - 1]);
+        System.out.printf("%s has left the building.\n", capsuleHotel[capsuleNumber - 1]);
         capsuleHotel[capsuleNumber - 1] = null;
     }
 
