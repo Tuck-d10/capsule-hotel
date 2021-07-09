@@ -8,13 +8,12 @@ public class CapsuleHotel {
 
     public static void main(String[] args){
         sc = new Scanner(System.in);
-        boolean isHotelActive = true;
         int numberOfRooms = args.length > 0 ? Integer.valueOf(args[0]) : 100;
         capsuleHotel = new String[numberOfRooms]; 
  
         System.out.println("Hello Welcome to the Capsule Hotel!");
-        while(isHotelActive){
-            isHotelActive = mainMenu();
+        while(mainMenu()){
+            //maybe clear screen here?
         }
         System.out.println("Thank you for visiting!");
     }
@@ -96,6 +95,7 @@ public class CapsuleHotel {
         int[] bounds;
 
         System.out.println("What capsule would you like to view?");
+        System.out.println("Enter the capsule #(1-"+capsuleHotel.length+")");
         userPrompt();
 
         do{
@@ -106,7 +106,7 @@ public class CapsuleHotel {
         bounds = calculateBounds(capsuleNumber - 1, 10);
 
         for(int i = bounds[0]; i <= bounds[1]; i++){
-            System.out.printf("%d)  %s\n",(i+1),(capsuleHotel[i] != null ? capsuleHotel[i] : "[empty]"));
+            System.out.printf("%d)\t%s\n",(i+1),(capsuleHotel[i] != null ? capsuleHotel[i] : "[empty]"));
         }
 
         printDivider('*');
