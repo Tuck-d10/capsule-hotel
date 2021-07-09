@@ -40,6 +40,7 @@ public class CapsuleHotel {
         
         printMenuHeader(LINE_LENGTH,"Main Menu");
         printItems(LINE_LENGTH, mainMenuOptions);
+        userPrompt();
 
         int option = sc.nextInt(); //Need validation to protect against bad input
 
