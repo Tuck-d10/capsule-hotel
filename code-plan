@@ -91,6 +91,9 @@ end exit
 
 
 TODO
+-Allow options to be selected using menu item names
+-Clear screen every time a new menu appears
+-Paginate room displays
 -Implement cleaner input validation
 -Refactor to seperate business logic and menu/views
     *would probably involve appending "Menu" to method names

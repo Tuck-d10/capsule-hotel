@@ -52,6 +52,14 @@ public class CapsuleHotel {
         String guestName;
         int capsuleNumber = -1;
 
+        boolean isOccupied = true;
+        String vaccantRoomsString = getListRoomsString(!isOccupied);
+
+        if(allOccupied()){
+            System.out.println("There are no vaccant rooms!");
+            return;
+        }
+
         //Getting the guests name
         printMenuHeader("Check In");
         System.out.println("Please Enter Name");
@@ -62,6 +70,8 @@ public class CapsuleHotel {
         System.out.println("Enter the capsule #(1-"+capsuleHotel.length+")");
         userPrompt();
         do{
+            System.out.printf("Vaccant Room #s:\t%s\n",vaccantRoomsString);
+            userPrompt();
             capsuleNumber = Integer.valueOf(sc.nextLine());
         }while(!isVaccant(capsuleNumber-1));
         
@@ -199,7 +209,6 @@ public class CapsuleHotel {
             capsuleIndex < capsuleHotel.length;
     }
 
-    //TODO complete this...
     private static int[] getListRooms(boolean isOccupied){
         int roomListingSize = numberRoomsOfStatus(isOccupied);
         int listingIndex = 0;
