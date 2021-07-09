@@ -92,7 +92,23 @@ public class CapsuleHotel {
     }
 
     private static void viewGuests(){
-        System.out.println("view guests");
+        int capsuleNumber;      //1 indexed
+        int[] bounds;
+
+        System.out.println("What capsule would you like to view?");
+        userPrompt();
+
+        do{
+            capsuleNumber = Integer.valueOf(sc.nextLine());
+        }while(capsuleNumber < 1 || capsuleNumber > capsuleHotel.length );
+        
+        //Has a lower and upper bound at [0] and [1] respectively
+        bounds = calculateBounds(capsuleNumber - 1, 10);
+
+        System.out.printf("Debug Bounds = %d,%d\n", bounds[0], bounds[1]);
+        for(int i = bounds[0]; i <= bounds[1]; i++){
+            System.out.printf("%d)  %s\n",(i+1),(capsuleHotel[i] != null ? capsuleHotel[i] : "[empty]"));
+        }
     }
 
     private static boolean exit(){
@@ -128,6 +144,28 @@ public class CapsuleHotel {
 
     private static void userPrompt(){
         System.out.print("?: ");
+    }
+
+    private static int[] calculateBounds(int index, int maxResults){
+        int[] bounds = new int[2];
+        int bottomPadding = maxResults % 2 == 0 ? maxResults/2 : (maxResults + 1)/2;
+        int topPadding = maxResults % 2 == 0 ? maxResults/2 : (maxResults -1)/2;
+
+        //If bottom padding goes out of bounds move extra padding to bottom
+        if(index - bottomPadding < 0){
+            topPadding += -(index - bottomPadding);
+        }
+        
+        //If top padding goes out of bounds move extra padding to bottom
+        if(index + topPadding > capsuleHotel.length - 1){
+            bottomPadding += ((index + topPadding) - capsuleHotel.length);
+        }
+
+        //Basic Implementation
+        bounds[0] = index - bottomPadding > 0 ? index - bottomPadding : 0;
+        bounds[1] = index + topPadding  < capsuleHotel.length ? index + topPadding : capsuleHotel.length - 1; 
+
+        return bounds;
     }
 
     private static boolean isYesNo(String answer){
