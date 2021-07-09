@@ -30,16 +30,16 @@ public class CapsuleHotel {
 
         switch(option){
             case 1:
-                checkIn();
+                checkInMenu();
                 break;
             case 2:
-                checkOut();
+                checkOutMenu();
                 break;
             case 3:
-                viewGuests();
+                viewGuestsMenu();
                 break;
             case 4:
-                boolean isHotelActive = exit();
+                boolean isHotelActive = exitMenu();
                 return isHotelActive;
             default:
                 System.out.println("Invalid input: use numbers 1-4.");
@@ -48,7 +48,7 @@ public class CapsuleHotel {
         return true; //Continues program loop
     }
 
-    private static void checkIn(){
+    private static void checkInMenu(){
         String guestName;
         int capsuleNumber = -1;
 
@@ -69,7 +69,7 @@ public class CapsuleHotel {
         capsuleHotel[capsuleNumber-1] = guestName;
     }
 
-    private static void checkOut(){
+    private static void checkOutMenu(){
         int capsuleNumber;
         String guestName;
         
@@ -90,23 +90,18 @@ public class CapsuleHotel {
         capsuleHotel[capsuleNumber - 1] = null;
     }
 
-    private static void viewGuests(){
-        int capsuleNumber;      //1 indexed
-        int[] bounds;
-
-        System.out.println("What capsule would you like to view?");
-        System.out.println("Enter the capsule #(1-"+capsuleHotel.length+")");
-        userPrompt();
-
-        do{
-            capsuleNumber = Integer.valueOf(sc.nextLine());
-        }while(capsuleNumber < 1 || capsuleNumber > capsuleHotel.length );
-        
+    //Method for displaying the guests on screen
+    private static void displayGuests(int capsuleNumber){
         //Has a lower and upper bound at [0] and [1] respectively
-        bounds = calculateBounds(capsuleNumber - 1, 10);
+        int[] bounds = calculateBounds(capsuleNumber - 1, 10);
 
         for(int i = bounds[0]; i <= bounds[1]; i++){
-            System.out.printf("%d)\t%s\n",(i+1),(capsuleHotel[i] != null ? capsuleHotel[i] : "[empty]"));
+            System.out.printf(
+                "%-2s%d)\t%s\n",
+                (capsuleNumber-1 == i ? "->" : ""),
+                (i+1),
+                (capsuleHotel[i] != null ? capsuleHotel[i] : "[empty]")
+            );
         }
 
         printDivider('*');
@@ -115,7 +110,22 @@ public class CapsuleHotel {
         sc.nextLine();
     }
 
-    private static boolean exit(){
+    private static void viewGuestsMenu(){
+        int capsuleNumber;      //1 indexed user readable capsule #
+
+        System.out.println("What capsule would you like to view?");
+        System.out.println("Enter the capsule #(1-"+capsuleHotel.length+")");
+        userPrompt();
+
+        do{
+            //TODO list occupied capsules
+            capsuleNumber = Integer.valueOf(sc.nextLine());
+        }while(capsuleNumber < 1 || capsuleNumber > capsuleHotel.length );
+        
+        displayGuests(capsuleNumber);
+    }
+
+    private static boolean exitMenu(){
         System.out.println("Are you sure you want to exit? [y/n]");
         String answer = "";
         while(!isYesNo(answer)){        //continues loop until yes or no answer is given
