@@ -1,5 +1,5 @@
 Objective
-    Create a capsule hotel simulator
+    Create a capsule hotel simulator using a procedural approach.
 
 Requirements
     -Main Menu with options to enter other sub menus
@@ -98,8 +98,8 @@ TODO
 -Refactor to seperate business logic and menu/views
     *would probably involve appending "Menu" to method names
     *e.g. checkOut would be business logic and checkOutMenu the output
--List vaccant room numbers when checking in
--List occupied rooms when checking out
+-DONE List vaccant room numbers when checking in
+-DONE List occupied rooms when checking out
     
 
         
