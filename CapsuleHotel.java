@@ -105,10 +105,14 @@ public class CapsuleHotel {
         //Has a lower and upper bound at [0] and [1] respectively
         bounds = calculateBounds(capsuleNumber - 1, 10);
 
-        System.out.printf("Debug Bounds = %d,%d\n", bounds[0], bounds[1]);
         for(int i = bounds[0]; i <= bounds[1]; i++){
             System.out.printf("%d)  %s\n",(i+1),(capsuleHotel[i] != null ? capsuleHotel[i] : "[empty]"));
         }
+
+        printDivider('*');
+        System.out.println("Press 'Enter' to return to main menu...");
+        userPrompt();
+        sc.nextLine();
     }
 
     private static boolean exit(){
