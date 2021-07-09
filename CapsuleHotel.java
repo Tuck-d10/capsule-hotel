@@ -72,6 +72,9 @@ public class CapsuleHotel {
     private static void checkOutMenu(){
         int capsuleNumber;
         String guestName;
+
+        boolean isOccupied = true;
+        String occupiedRoomsString = getListRoomsString(isOccupied);
         
         if(allVaccancies()){
             System.out.println("There are no guests in the hotel.");
@@ -83,6 +86,8 @@ public class CapsuleHotel {
         System.out.println("Enter the capsule #(1-"+capsuleHotel.length+")");        
         
         do{
+            System.out.printf("Occupied Room #s:\t%s\n",occupiedRoomsString);
+            userPrompt();
             capsuleNumber = Integer.valueOf(sc.nextLine());
         }while(capsuleNumber < 0 || capsuleNumber > capsuleHotel.length || isVaccant(capsuleNumber - 1));
 
@@ -192,6 +197,49 @@ public class CapsuleHotel {
     private static boolean isValidRoom(int capsuleIndex){
         return 0 <= capsuleIndex && 
             capsuleIndex < capsuleHotel.length;
+    }
+
+    //TODO complete this...
+    private static int[] getListRooms(boolean isOccupied){
+        int roomListingSize = numberRoomsOfStatus(isOccupied);
+        int listingIndex = 0;
+        int[] roomListing = new int[roomListingSize];
+
+        for(int i = 0; i < capsuleHotel.length; i++){
+            if((capsuleHotel[i] != null) == isOccupied){
+                roomListing[listingIndex] = (i + 1);
+                listingIndex++;
+            }
+        }
+
+        return roomListing;
+    }
+
+    private static String getListRoomsString(boolean isOccupied){
+        int[] integerArrayOfRooms = getListRooms(isOccupied);
+        StringBuilder sb = new StringBuilder(256);
+
+        for(int i=0;i<integerArrayOfRooms.length;i++){
+            sb.append(new Integer(integerArrayOfRooms[i]).toString());
+            if(i < integerArrayOfRooms.length - 1){
+                sb.append(", ");
+            }
+        }
+
+        return sb.toString();
+    }
+
+    private static int numberRoomsOfStatus(boolean isOccupied){
+        int numberRooms = 0;
+        for(int i = 0; i < capsuleHotel.length; i++){
+            numberRooms += isOfStatus(isOccupied, i) ? 1 : 0;
+        }
+
+        return numberRooms;
+    }
+
+    private static boolean isOfStatus(boolean isOccupied, int capsuleIndex){
+        return isOccupied ? isOccupied(capsuleIndex) : isVaccant(capsuleIndex);
     }
 
     private static boolean isVaccant(int capsuleIndex){
