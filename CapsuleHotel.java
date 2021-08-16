@@ -8,7 +8,7 @@ public class CapsuleHotel {
 
     public static void main(String[] args){
         sc = new Scanner(System.in);
-        int numberOfRooms = args.length > 0 ? Integer.valueOf(args[0]) : 100;
+        int numberOfRooms = args.length > 0 ? Integer.parseInt(args[0]) : 100;
         capsuleHotel = new String[numberOfRooms]; 
  
         System.out.println("Hello Welcome to the Capsule Hotel!");
@@ -26,7 +26,7 @@ public class CapsuleHotel {
         printItems(mainMenuOptions);
         userPrompt();
 
-        int option = Integer.valueOf(sc.nextLine()); //Need validation to protect against bad input
+        int option = Integer.parseInt(sc.nextLine()); //Need validation to protect against bad input
 
         switch(option){
             case 1:
@@ -39,8 +39,7 @@ public class CapsuleHotel {
                 viewGuestsMenu();
                 break;
             case 4:
-                boolean isHotelActive = exitMenu();
-                return isHotelActive;
+                return exitMenu();
             default:
                 System.out.println("Invalid input: use numbers 1-4.");
         }
@@ -52,8 +51,7 @@ public class CapsuleHotel {
         String guestName;
         int capsuleNumber = -1;
 
-        boolean isOccupied = true;
-        String vaccantRoomsString = getListRoomsString(!isOccupied);
+        String vacantRoomsString = getListRoomsString(false);
 
         if(allOccupied()){
             System.out.println("There are no vaccant rooms!");
@@ -70,10 +68,10 @@ public class CapsuleHotel {
         System.out.println("Enter the capsule #(1-"+capsuleHotel.length+")");
         userPrompt();
         do{
-            System.out.printf("Vaccant Room #s:\t%s\n",vaccantRoomsString);
+            System.out.printf("Vacant Room #s:\t%s\n",vacantRoomsString);
             userPrompt();
-            capsuleNumber = Integer.valueOf(sc.nextLine());
-        }while(!isVaccant(capsuleNumber-1));
+            capsuleNumber = Integer.parseInt(sc.nextLine());
+        }while(!isVacant(capsuleNumber-1));
         
         //assign the value
         capsuleHotel[capsuleNumber-1] = guestName;
@@ -98,8 +96,8 @@ public class CapsuleHotel {
         do{
             System.out.printf("Occupied Room #s:\t%s\n",occupiedRoomsString);
             userPrompt();
-            capsuleNumber = Integer.valueOf(sc.nextLine());
-        }while(capsuleNumber < 0 || capsuleNumber > capsuleHotel.length || isVaccant(capsuleNumber - 1));
+            capsuleNumber = Integer.parseInt(sc.nextLine());
+        }while(capsuleNumber < 0 || capsuleNumber > capsuleHotel.length || isVacant(capsuleNumber - 1));
 
         System.out.printf("%s has left the building.\n", capsuleHotel[capsuleNumber - 1]);
         capsuleHotel[capsuleNumber - 1] = null;
@@ -190,9 +188,8 @@ public class CapsuleHotel {
             bottomPadding += ((index + topPadding) - capsuleHotel.length);
         }
 
-        //Basic Implementation
-        bounds[0] = index - bottomPadding > 0 ? index - bottomPadding : 0;
-        bounds[1] = index + topPadding  < capsuleHotel.length ? index + topPadding : capsuleHotel.length - 1; 
+        bounds[0] = Math.max(index - bottomPadding, 0);
+        bounds[1] = Math.min(index + topPadding,capsuleHotel.length-1);
 
         return bounds;
     }
@@ -229,7 +226,7 @@ public class CapsuleHotel {
         StringBuilder sb = new StringBuilder(256);
 
         for(int i=0;i<integerArrayOfRooms.length;i++){
-            sb.append(new Integer(integerArrayOfRooms[i]).toString());
+            sb.append(Integer.toString(integerArrayOfRooms[i]));
             if(i < integerArrayOfRooms.length - 1){
                 sb.append(", ");
             }
@@ -248,10 +245,10 @@ public class CapsuleHotel {
     }
 
     private static boolean isOfStatus(boolean isOccupied, int capsuleIndex){
-        return isOccupied ? isOccupied(capsuleIndex) : isVaccant(capsuleIndex);
+        return isOccupied ? isOccupied(capsuleIndex) : isVacant(capsuleIndex);
     }
 
-    private static boolean isVaccant(int capsuleIndex){
+    private static boolean isVacant(int capsuleIndex){
         return  isValidRoom(capsuleIndex) && capsuleHotel[capsuleIndex] == null;
     }
 
@@ -260,14 +257,13 @@ public class CapsuleHotel {
     }
 
     private static boolean allVaccancies(){
-        boolean areAllVaccant = true;
         for(int roomIdx=0; roomIdx < capsuleHotel.length; roomIdx++){
-            if(!isVaccant(roomIdx)){
-                return !areAllVaccant;
+            if(!isVacant(roomIdx)){
+                return false;
             }
         }
 
-        return areAllVaccant;
+        return true;
     }
 
     private static boolean allOccupied(){
